@@ -1,0 +1,247 @@
+# Copyright (C) 2019 i-Docs Bibliography
+# This file is distributed under the same license as the i-Docs Bibliography package.
+msgid ""
+msgstr ""
+"Project-Id-Version: i-Docs Bibliography 0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/idocs-bibliography\n"
+"POT-Creation-Date: 2019-10-24 15:02:20+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: includes/idocs-bibliography-acf.php:96
+msgid "Bibliographic Data"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:169
+msgid "Author"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:178
+msgid "Authors"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:202
+msgid "Abstract"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:226
+msgid "Year Published"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:253
+msgid "Place of Publication"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:277
+msgid "Publisher"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:301
+msgid "Publication"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:304
+msgid "For example the name of the Journal. If this is a book, leave blank."
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:325
+msgid "Volume"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:349
+msgid "Issue"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:373
+msgid "Starting Page Reference"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:397
+msgid "Ending Page Reference"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:400
+msgid "Leave blank if this citation only references a single page."
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:421
+msgid "ISBN"
+msgstr ""
+
+#: includes/idocs-bibliography-acf.php:445
+msgid "Link"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:162
+#: includes/idocs-bibliography-cpt.php:173
+msgid "Citations"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:163
+msgid "Citation"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:164
+msgid "Add New"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:165
+msgid "Add New Citation"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:166
+msgid "Edit Citation"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:167
+msgid "New Citation"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:168
+msgid "All Citations"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:169
+msgid "View Citation"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:170
+msgid "Search Citations"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:171
+msgid "No matching Citation found"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:172
+msgid "No Citations found in Trash"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:178
+msgid "A citation post type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:240
+msgid "Citation updated. <a href=\"%s\">View Citation</a>"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:245
+msgid "Custom field updated."
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:246
+msgid "Custom field deleted."
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:247
+msgid "Citation updated."
+msgstr ""
+
+#. Translators: %s: date and time of the revision.
+
+#: includes/idocs-bibliography-cpt.php:255
+msgid "Citation restored to revision from %s"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:264
+msgid "Citation published. <a href=\"%s\">View Citation</a>"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:269
+msgid "Citation saved."
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:273
+msgid "Citation submitted. <a target=\"_blank\" href=\"%s\">Preview Citation</a>"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:279
+msgid "Citation scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview Citation</a>"
+msgstr ""
+
+#. Translators: Publish box date format, see http://php.net/date
+
+#: includes/idocs-bibliography-cpt.php:281
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:288
+msgid "Citation draft updated. <a target=\"_blank\" href=\"%s\">Preview Citation</a>"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:317
+msgid "Add the title of the book, paper etc"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:356
+msgctxt "taxonomy general name"
+msgid "Citation Types"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:357
+msgctxt "taxonomy singular name"
+msgid "Citation Type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:358
+msgid "Search Citation Types"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:359
+msgid "All Citation Types"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:360
+msgid "Parent Citation Type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:361
+msgid "Parent Citation Type:"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:362
+msgid "Edit Citation Type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:363
+msgid "Update Citation Type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:364
+msgid "Add New Citation Type"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:365
+msgid "New Citation Type Name"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:366
+msgid "Citation Types"
+msgstr ""
+
+#: includes/idocs-bibliography-cpt.php:455
+msgid "Show All %s"
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "i-Docs Bibliography"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://i-docs.org"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Provides a bibliography for the i-Docs website."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://haystack.co.uk"
+msgstr ""
