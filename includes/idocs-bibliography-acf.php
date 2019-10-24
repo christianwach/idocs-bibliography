@@ -443,7 +443,7 @@ class iDocs_Bibliography_ACF {
 		$field = [
 			'key' => 'field_idocs_bib_link',
 			'label' => __( 'Link', 'idocs-bibliography' ),
-			'name' => 'isbn',
+			'name' => 'link',
 			'type' => 'url',
 			'instructions' => '',
 			'default_value' => '',
