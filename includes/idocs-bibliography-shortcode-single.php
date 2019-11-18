@@ -1,15 +1,16 @@
 <?php
 
 /**
- * iDocs Bibliography Shortcodes Class.
+ * iDocs Bibliography Single Citation Shortcode Class.
  *
- * A class that encapsulates the iDocs Bibliography Shortcode.
+ * A class that encapsulates the iDocs Bibliography Shortcode which renders a
+ * single Citation.
  *
  * @since 0.1
  *
  * @package iDocs_Bibliography
  */
-class iDocs_Bibliography_Shortcode {
+class iDocs_Bibliography_Shortcode_Single {
 
 	/**
 	 * Plugin (calling) object.
@@ -62,7 +63,7 @@ class iDocs_Bibliography_Shortcode {
 
 		// Shortcake compat
 		add_action( 'register_shortcode_ui', [ $this, 'shortcake' ] );
-		add_action( 'enqueue_shortcode_ui', [ $this, 'shortcake_scripts' ] );
+		//add_action( 'enqueue_shortcode_ui', [ $this, 'shortcake_scripts' ] );
 
 	}
 
@@ -93,12 +94,12 @@ class iDocs_Bibliography_Shortcode {
 	 *
 	 * @param array $attr The saved shortcode attributes.
 	 * @param str $content The enclosed content of the shortcode.
-	 * @return str $team The HTML markup for the shortcode.
+	 * @return str $citation The HTML markup for the shortcode.
 	 */
 	public function shortcode_render( $attr, $content = null ) {
 
 		// Init return.
-		$content = '';
+		$citation = '';
 
 		// Init defaults.
 		$defaults = array(
@@ -108,26 +109,32 @@ class iDocs_Bibliography_Shortcode {
 		// Parse attributes.
 		$shortcode_atts = shortcode_atts( $defaults, $attr, 'idocs_citation' );
 
-		// Get the post.
-		$citation_post = get_post( $id );
+		// Bail id there's no ID.
+		if ( empty( $shortcode_atts['id'] ) ) {
+			return $citation;
+		}
 
-		// Check we got one.
-		if ( is_object( $citation_post ) ) {
+		// get School Docs for the specified type
+		$args = array(
+			'post_type' => $this->plugin->cpt->post_type_name,
+			'post_status' => 'publish',
+			'no_found_rows' => true,
+			'posts_per_page' => 1,
+			'p' => $shortcode_atts['id'],
+		);
 
-			// Set it up
-			setup_postdata( $citation_post );
+		// Do query.
+		$query = new WP_Query( $args );
 
-			// We need to manually apply our content filter because $post is the
-			// object for the post into which the video has been embedded
-			$content = apply_filters( 'the_content', get_the_content() );
-
-			// reset just in case
-			wp_reset_postdata();
-
+		// Grab rendered citation.
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) : $query->the_post();
+				$citation = idocs_get_the_citation();
+			endwhile;
 		}
 
 		// --<
-		return $content;
+		return $citation;
 
 	}
 
@@ -202,46 +209,30 @@ class iDocs_Bibliography_Shortcode {
 	 */
 	public function shortcake_select() {
 
-		// init return
+		// Init return.
 		$options = array(
 			array( 'value' => '', 'label' => __( 'None', 'idocs-bibliography' ) ),
 		);
 
-		// init query args
-		$site_args = array(
-			'archived' => 0,
-			'spam' => 0,
-			'deleted' => 0,
-			'public' => 1,
+		// get School Docs for the specified type
+		$args = array(
+			'post_type' => $this->plugin->cpt->post_type_name,
+			'post_status' => 'publish',
+			'no_found_rows' => true,
+			'posts_per_page' => -1,
 		);
 
-		/**
-		 * Apply plugin-wide $site_args filter.
-		 *
-		 * @since 0.1
-		 *
-		 * @param array $site_args The arguments used to query the sites.
-		 */
-		$site_args = apply_filters( 'wpncd_filter_site_args', $site_args );
+		// Do query.
+		$query = new WP_Query( $args );
 
-		/**
-		 * Allow the $site_args to be specifically filtered here.
-		 *
-		 * @since 0.1
-		 *
-		 * @param array $site_args The arguments used to query the sites.
-		 */
-		$site_args = apply_filters( 'wpncd_shortcake_select_sites_for_sites_args', $site_args );
-
-		// get sites
-		$sites = get_sites( $site_args );
-
-		// add data for each site
-		foreach( $sites AS $site ) {
-			$options[] = array(
-				'value' => $site->blog_id,
-				'label' => esc_html( get_blog_details( $site->blog_id )->blogname ),
-			);
+		// Populate options.
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) : $query->the_post();
+				$options[] = array(
+					'value' => get_the_ID(),
+					'label' => get_the_title(),
+				);
+			endwhile;
 		}
 
 		// --<
@@ -279,7 +270,7 @@ class iDocs_Bibliography_Shortcode {
 	 */
 	public function shortcake_styles( $mce_css ) {
 
-		// add our styles to TinyMCE
+		// Add our styles to TinyMCE.
 		$mce_css .= ', ' . IDOCS_BIBLIOGRAPHY_URL . 'assets/css/idocs-bibliography.css';
 
 		// --<

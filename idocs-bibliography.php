@@ -60,13 +60,22 @@ class iDocs_Bibliography {
 	public $acf;
 
 	/**
-	 * Shortcode object.
+	 * "Single Citation" Shortcode object.
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $shortcode The Shortcode object.
+	 * @var object $shortcode The "Single Citation" Shortcode object.
 	 */
-	public $shortcode;
+	public $shortcode_single;
+
+	/**
+	 * "Citations List" Shortcode object.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var object $shortcode The "Citations List" Shortcode object.
+	 */
+	public $shortcode_list;
 
 
 
@@ -154,8 +163,9 @@ class iDocs_Bibliography {
 		// Include ACF class.
 		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-acf.php';
 
-		// Include Shortcode class.
-		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-shortcode.php';
+		// Include Shortcode classes.
+		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-shortcode-single.php';
+		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-shortcode-list.php';
 
 	}
 
@@ -174,8 +184,9 @@ class iDocs_Bibliography {
 		// Init ACF object.
 		$this->acf = new iDocs_Bibliography_ACF( $this );
 
-		// Init Shortcodes object.
-		$this->shortcodes = new iDocs_Bibliography_Shortcode( $this );
+		// Init Shortcode objects.
+		$this->shortcode_single = new iDocs_Bibliography_Shortcode_Single( $this );
+		$this->shortcode_list = new iDocs_Bibliography_Shortcode_List( $this );
 
 	}
 
