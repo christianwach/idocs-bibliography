@@ -59,6 +59,15 @@ class iDocs_Bibliography {
 	 */
 	public $acf;
 
+	/**
+	 * Shortcode object.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var object $shortcode The Shortcode object.
+	 */
+	public $shortcode;
+
 
 
 	/**
@@ -136,11 +145,17 @@ class iDocs_Bibliography {
 	 */
 	public function include_files() {
 
+		// Include functions.
+		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-functions.php';
+
 		// Include CPT class.
 		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-cpt.php';
 
 		// Include ACF class.
 		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-acf.php';
+
+		// Include Shortcode class.
+		include IDOCS_BIBLIOGRAPHY_PATH . 'includes/idocs-bibliography-shortcode.php';
 
 	}
 
@@ -158,6 +173,9 @@ class iDocs_Bibliography {
 
 		// Init ACF object.
 		$this->acf = new iDocs_Bibliography_ACF( $this );
+
+		// Init Shortcodes object.
+		$this->shortcodes = new iDocs_Bibliography_Shortcode( $this );
 
 	}
 

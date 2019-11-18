@@ -28,13 +28,22 @@ class iDocs_Bibliography_CPT {
 	public $post_type_name = 'citation';
 
 	/**
-	 * Taxonomy name.
+	 * Category name.
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var str $taxonomy_name The name of the Custom Taxonomy.
+	 * @var str $taxonomy_name The name of the Custom Hierarchical Taxonomy.
 	 */
 	public $taxonomy_name = 'citationcat';
+
+	/**
+	 * Tag name.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var str $taxonomy_name The name of the Custom Free Taxonomy.
+	 */
+	public $tag_name = 'citationtag';
 
 
 
@@ -84,6 +93,15 @@ class iDocs_Bibliography_CPT {
 
 		// Add a filter to the wp-admin listing table.
 		add_action( 'restrict_manage_posts', [ $this, 'taxonomy_filter_post_type' ] );
+
+		// Create taxonomy.
+		add_action( 'init', [ $this, 'tag_create' ] );
+
+		// Fix hierarchical taxonomy metabox display.
+		add_filter( 'wp_terms_checklist_args', [ $this, 'tag_fix_metabox' ], 10, 2 );
+
+		// Add a filter to the wp-admin listing table.
+		add_action( 'restrict_manage_posts', [ $this, 'tag_filter_post_type' ] );
 
 		// Add feature image size.
 		//add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
@@ -323,8 +341,12 @@ class iDocs_Bibliography_CPT {
 
 
 
+	// #########################################################################
+
+
+
 	/**
-	 * Create our Custom Taxonomy.
+	 * Create our Custom Hierarchical Taxonomy.
 	 *
 	 * @since 0.1
 	 */
@@ -389,7 +411,7 @@ class iDocs_Bibliography_CPT {
 
 
 	/**
-	 * Fix the Custom Taxonomy metabox.
+	 * Fix the Custom Hierarchical Taxonomy metabox.
 	 *
 	 * @see https://core.trac.wordpress.org/ticket/10982
 	 *
@@ -416,26 +438,7 @@ class iDocs_Bibliography_CPT {
 
 
 	/**
-	 * Create our Feature Image size.
-	 *
-	 * @since 0.1
-	 */
-	public function feature_image_create() {
-
-		// Define a small, square custom image size, cropped to fit.
-		add_image_size(
-			'idocs-bibliography-citation',
-			apply_filters( 'idocs_bibliography_citation_image_width', 384 ),
-			apply_filters( 'idocs_bibliography_citation_image_height', 384 ),
-			true // Crop.
-		);
-
-	}
-
-
-
-	/**
-	 * Add a filter for this Custom Taxonomy to the Custom Post Type listing.
+	 * Add a filter for this Custom Hierarchical Taxonomy to the Custom Post Type listing.
 	 *
 	 * @since 0.1
 	 */
@@ -462,6 +465,158 @@ class iDocs_Bibliography_CPT {
 			'value_field' => 'slug',
 			'hierarchical' => 1,
 		] );
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Create our Custom Free Taxonomy.
+	 *
+	 * @since 0.1
+	 */
+	public function tag_create() {
+
+		// Only call this once.
+		static $registered;
+
+		// Bail if already done.
+		if ( $registered ) return;
+
+		// Register a taxonomy for this CPT.
+		register_taxonomy(
+
+			// Taxonomy name.
+			$this->tag_name,
+
+			// Post type.
+			$this->post_type_name,
+
+			// Arguments.
+			[
+
+				// Same as "tag".
+				'hierarchical' => false,
+
+				// Labels.
+				'labels' => [
+					'name'              => _x( 'Citation Tags', 'taxonomy general name', 'idocs-bibliography' ),
+					'singular_name'     => _x( 'Citation Tag', 'taxonomy singular name', 'idocs-bibliography' ),
+					'search_items'      => __( 'Search Citation Tags', 'idocs-bibliography' ),
+					'all_items'         => __( 'All Citation Tags', 'idocs-bibliography' ),
+					'parent_item'       => __( 'Parent Citation Tag', 'idocs-bibliography' ),
+					'parent_item_colon' => __( 'Parent Citation Tag:', 'idocs-bibliography' ),
+					'edit_item'         => __( 'Edit Citation Tag', 'idocs-bibliography' ),
+					'update_item'       => __( 'Update Citation Tag', 'idocs-bibliography' ),
+					'add_new_item'      => __( 'Add New Citation Tag', 'idocs-bibliography' ),
+					'new_item_name'     => __( 'New Citation Tag Name', 'idocs-bibliography' ),
+					'menu_name'         => __( 'Citation Tags', 'idocs-bibliography' ),
+				],
+
+				// Rewrite rules.
+				'rewrite' => [
+					'slug' => 'citation-tags'
+				],
+
+				// Show column in wp-admin.
+				'show_admin_column' => true,
+				'show_ui' => true,
+
+			]
+
+		);
+
+		//flush_rewrite_rules();
+
+		// Flag done.
+		$registered = true;
+
+	}
+
+
+
+	/**
+	 * Fix the Custom Free Taxonomy metabox.
+	 *
+	 * @see https://core.trac.wordpress.org/ticket/10982
+	 *
+	 * @since 0.1
+	 *
+	 * @param array $args The existing arguments.
+	 * @param int $post_id The WordPress post ID.
+	 */
+	public function tag_fix_metabox( $args, $post_id ) {
+
+		// If rendering metabox for our taxonomy.
+		if ( isset( $args['taxonomy'] ) AND $args['taxonomy'] == $this->tag_name ) {
+
+			// Setting 'checked_ontop' to false seems to fix this.
+			$args['checked_ontop'] = false;
+
+		}
+
+		// --<
+		return $args;
+
+	}
+
+
+
+	/**
+	 * Add a filter for this Custom Free Taxonomy to the Custom Post Type listing.
+	 *
+	 * @since 0.1
+	 */
+	public function tag_filter_post_type() {
+
+		// Access current post type.
+		global $typenow;
+
+		// Bail if not our post type,
+		if ( $typenow != $this->post_type_name ) return;
+
+		// Get tax object.
+		$taxonomy = get_taxonomy( $this->tag_name );
+
+		// Show a dropdown.
+		wp_dropdown_categories( [
+			'show_option_all' => sprintf( __( 'Show All %s', 'idocs-bibliography' ), $taxonomy->label ),
+			'taxonomy' => $this->tag_name,
+			'name' => $this->tag_name,
+			'orderby' => 'name',
+			'selected' => isset( $_GET[$this->tag_name] ) ? $_GET[$this->tag_name] : '',
+			'show_count' => true,
+			'hide_empty' => true,
+			'value_field' => 'slug',
+			'hierarchical' => 1,
+		] );
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Create our Feature Image size.
+	 *
+	 * @since 0.1
+	 */
+	public function feature_image_create() {
+
+		// Define a small, square custom image size, cropped to fit.
+		add_image_size(
+			'idocs-bibliography-citation',
+			apply_filters( 'idocs_bibliography_citation_image_width', 384 ),
+			apply_filters( 'idocs_bibliography_citation_image_height', 384 ),
+			true // Crop.
+		);
 
 	}
 
