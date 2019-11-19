@@ -49,7 +49,8 @@ function idocs_get_the_citation() {
 	// Get the date published.
 	$published = get_field( 'field_idocs_bib_year' );
 
-	// Wrap in brackets if we get one.
+	// Wrap year in brackets if we get one.
+	$year = '';
 	if ( ! empty( $published ) ) {
 		$year = '(' . $published . ') ';
 	}

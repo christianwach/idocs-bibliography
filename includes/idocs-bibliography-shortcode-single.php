@@ -161,7 +161,7 @@ class iDocs_Bibliography_Shortcode_Single {
 		if ( ! function_exists( 'shortcode_ui_register_for_shortcode' ) ) return;
 
 		// Add styles for TinyMCE editor.
-		add_filter( 'mce_css', array( $this, 'shortcake_styles' ) );
+		//add_filter( 'mce_css', array( $this, 'shortcake_styles' ) );
 
 		// Register this shortcode.
 		shortcode_ui_register_for_shortcode(
@@ -187,7 +187,7 @@ class iDocs_Bibliography_Shortcode_Single {
 						'attr'  => 'id',
 						'type'  => 'select',
 						'options' => $this->shortcake_select(),
-						'description' => __( 'Please select a Citation.', 'idocs-bibliography' )
+						'description' => __( 'Please select a Citation.', 'idocs-bibliography' ),
 					),
 
 				),

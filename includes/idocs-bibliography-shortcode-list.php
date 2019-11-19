@@ -121,6 +121,14 @@ class iDocs_Bibliography_Shortcode_List {
 			'order' => 'ASC',
 		);
 
+		$e = new Exception;
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'shortcode_atts' => $shortcode_atts,
+			//'backtrace' => $trace,
+		), true ) );
+
 		// Add taxonomy stuff.
 		$args['tax_query'] = [
 			'relation' => $shortcode_atts['relation'],
@@ -130,7 +138,7 @@ class iDocs_Bibliography_Shortcode_List {
 		if ( ! empty( $shortcode_atts['category'] ) ) {
 			$args['tax_query'][] = [
 				'taxonomy' => $this->plugin->cpt->taxonomy_name,
-				'terms' => $shortcode_atts['category'],
+				'terms' => array_map( 'intval', explode( ',', $shortcode_atts['category'] ) ),
 			];
 		}
 
@@ -138,20 +146,31 @@ class iDocs_Bibliography_Shortcode_List {
 		if ( ! empty( $shortcode_atts['tag'] ) ) {
 			$args['tax_query'][] = [
 				'taxonomy' => $this->plugin->cpt->tag_name,
-				'terms' => $shortcode_atts['tag'],
+				'terms' => array_map( 'intval', explode( ',', $shortcode_atts['tag'] ) ),
 			];
 		}
 
 		// Do query.
 		$query = new WP_Query( $args );
 
-		// Grab rendered citations.
+		// See how we do.
 		$citations = [];
 		if ( $query->have_posts() ) {
+
+			// Grab rendered citations.
 			while ( $query->have_posts() ) : $query->the_post();
 				$citations[] = idocs_get_the_citation();
 			endwhile;
+
+			// Sort alphabetically.
+			asort( $citations );
+
+			// Build list.
 			$content = '<ul><li>' . implode( '</li><li>', $citations ) . '</li></ul>';
+
+			// Reset loop.
+			rewind_posts();
+
 		}
 
 		// --<
@@ -182,7 +201,7 @@ class iDocs_Bibliography_Shortcode_List {
 		if ( ! function_exists( 'shortcode_ui_register_for_shortcode' ) ) return;
 
 		// Add styles for TinyMCE editor.
-		add_filter( 'mce_css', array( $this, 'shortcake_styles' ) );
+		//add_filter( 'mce_css', array( $this, 'shortcake_styles' ) );
 
 		// Register this shortcode.
 		shortcode_ui_register_for_shortcode(
@@ -209,6 +228,9 @@ class iDocs_Bibliography_Shortcode_List {
 						'type'  => 'select',
 						'options' => $this->shortcake_select_category(),
 						'description' => __( 'Optionally select a Category.', 'idocs-bibliography' ),
+						'meta' => array(
+							'multiple' => true,
+						),
 					),
 
 					// Citations tag.
@@ -218,6 +240,9 @@ class iDocs_Bibliography_Shortcode_List {
 						'type'  => 'select',
 						'options' => $this->shortcake_select_tag(),
 						'description' => __( 'Optionally select a Tag.', 'idocs-bibliography' ),
+						'meta' => array(
+							'multiple' => true,
+						),
 					),
 
 					// Relationship.
