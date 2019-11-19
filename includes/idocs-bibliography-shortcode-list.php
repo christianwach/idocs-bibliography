@@ -121,14 +121,6 @@ class iDocs_Bibliography_Shortcode_List {
 			'order' => 'ASC',
 		);
 
-		$e = new Exception;
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'shortcode_atts' => $shortcode_atts,
-			//'backtrace' => $trace,
-		), true ) );
-
 		// Add taxonomy stuff.
 		$args['tax_query'] = [
 			'relation' => $shortcode_atts['relation'],
@@ -167,9 +159,6 @@ class iDocs_Bibliography_Shortcode_List {
 
 			// Build list.
 			$content = '<ul><li>' . implode( '</li><li>', $citations ) . '</li></ul>';
-
-			// Reset loop.
-			rewind_posts();
 
 		}
 
