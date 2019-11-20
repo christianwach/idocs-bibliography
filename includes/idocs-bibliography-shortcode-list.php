@@ -162,6 +162,9 @@ class iDocs_Bibliography_Shortcode_List {
 
 		}
 
+		// Prevent weirdness.
+		wp_reset_postdata();
+
 		// --<
 		return $content;
 

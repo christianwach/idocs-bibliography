@@ -131,6 +131,7 @@ class iDocs_Bibliography_Shortcode_Single {
 			while ( $query->have_posts() ) : $query->the_post();
 				$citation = idocs_get_the_citation();
 			endwhile;
+			wp_reset_postdata();
 		}
 
 		// --<
@@ -214,7 +215,7 @@ class iDocs_Bibliography_Shortcode_Single {
 			array( 'value' => '', 'label' => __( 'None', 'idocs-bibliography' ) ),
 		);
 
-		// get School Docs for the specified type
+		// Get all citations.
 		$args = array(
 			'post_type' => $this->plugin->cpt->post_type_name,
 			'post_status' => 'publish',
@@ -223,16 +224,18 @@ class iDocs_Bibliography_Shortcode_Single {
 		);
 
 		// Do query.
-		$query = new WP_Query( $args );
+		$citations = new WP_Query( $args );
 
 		// Populate options.
-		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) : $query->the_post();
+		if ( $citations->have_posts() ) {
+			// Must be a foreach...
+			// @see https://core.trac.wordpress.org/ticket/18408
+			foreach( $citations->get_posts() AS $citation ) {
 				$options[] = array(
-					'value' => get_the_ID(),
-					'label' => get_the_title(),
+					'value' => $citation->ID,
+					'label' => get_the_title( $citation->ID ),
 				);
-			endwhile;
+			}
 		}
 
 		// --<
