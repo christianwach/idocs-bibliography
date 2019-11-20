@@ -4,7 +4,7 @@ Plugin Name: i-Docs Bibliography
 Plugin URI: https://i-docs.org
 Description: Provides a bibliography for the i-Docs website.
 Author: Christian Wach
-Version: 0.1
+Version: 0.2
 Author URI: https://haystack.co.uk
 Text Domain: idocs-bibliography
 Domain Path: /languages
@@ -14,7 +14,7 @@ Domain Path: /languages
 
 
 // Set our version here.
-define( 'IDOCS_BIBLIOGRAPHY_VERSION', '0.1' );
+define( 'IDOCS_BIBLIOGRAPHY_VERSION', '0.2' );
 
 // Store reference to this file.
 if ( ! defined( 'IDOCS_BIBLIOGRAPHY_FILE' ) ) {
