@@ -219,6 +219,7 @@ class iDocs_Bibliography_CPT {
 				'title',
 				//'editor',
 				'excerpt',
+				'author',
 				//'thumbnail',
 				//'revisions',
 			],

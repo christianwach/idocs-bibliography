@@ -82,7 +82,7 @@ class iDocs_Bibliography_ACF {
 			'discussion',
 			'comments',
 			'revisions',
-			'author',
+			//'author',
 			'format',
 			'page_attributes',
 			'featured_image',

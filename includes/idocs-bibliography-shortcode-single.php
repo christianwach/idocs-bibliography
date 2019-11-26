@@ -114,7 +114,7 @@ class iDocs_Bibliography_Shortcode_Single {
 			return $citation;
 		}
 
-		// get School Docs for the specified type
+		// Get posts of the specified type.
 		$args = array(
 			'post_type' => $this->plugin->cpt->post_type_name,
 			'post_status' => 'publish',
@@ -253,7 +253,7 @@ class iDocs_Bibliography_Shortcode_Single {
 	public function shortcake_scripts() {
 
 		wp_enqueue_script(
-			'wpncd-shortcode-ui',
+			'idocs-bibliography-shortcode-ui',
 			IDOCS_BIBLIOGRAPHY_URL . 'assets/js/idocs-bibliography.js',
 			array( 'shortcode-ui' ),
 			IDOCS_BIBLIOGRAPHY_VERSION
@@ -268,8 +268,8 @@ class iDocs_Bibliography_Shortcode_Single {
 	 *
 	 * @since 0.1
 	 *
-	 * @param str $mce_css The existing list of stylesheets that TinyMCE will load
-	 * @return str $mce_css The modified list of stylesheets that TinyMCE will load
+	 * @param str $mce_css The existing list of stylesheets that TinyMCE will load.
+	 * @return str $mce_css The modified list of stylesheets that TinyMCE will load.
 	 */
 	public function shortcake_styles( $mce_css ) {
 
