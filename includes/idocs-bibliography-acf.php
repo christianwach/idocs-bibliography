@@ -85,7 +85,7 @@ class iDocs_Bibliography_ACF {
 			//'author',
 			'format',
 			'page_attributes',
-			'featured_image',
+			//'featured_image',
 			'tags',
 			'send-trackbacks',
 		];
