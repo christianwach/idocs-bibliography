@@ -77,7 +77,7 @@ class iDocs_Bibliography_CPT {
 		add_action( 'init', [ $this, 'post_type_create' ] );
 
 		// Amend the UI on our post type edit screen.
-		add_action( 'do_meta_boxes', [ $this, 'post_type_ui_filter' ] );
+		//add_action( 'do_meta_boxes', [ $this, 'post_type_ui_filter' ] );
 
 		// Make sure our feedback is appropriate.
 		add_filter( 'post_updated_messages', [ $this, 'post_type_messages' ] );
@@ -106,10 +106,17 @@ class iDocs_Bibliography_CPT {
 		// Add feature image size.
 		//add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
+		// Filter the author and replace with Citation authors.
+		add_filter( 'the_author', [ $this, 'the_author' ] );
+
 	}
 
+
+
 	/**
-	 * Actions to perform on plugin activation.
+	 * Remove Uncode theme elements.
+	 *
+	 * Not used.
 	 *
 	 * @since 0.1
 	 */
@@ -618,6 +625,35 @@ class iDocs_Bibliography_CPT {
 			apply_filters( 'idocs_bibliography_citation_image_height', 384 ),
 			true // Crop.
 		);
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Replace the post author with Citation authors.
+	 *
+	 * @since 0.2
+	 *
+	 * @param str $display_name The existing post author's display name.
+	 * @return str $display_name The modified post author's display name.
+	 */
+	public function the_author( $display_name ) {
+
+		// Bail if not our post type.
+		if ( $this->post_type_name !== get_post_type() ) {
+			return $display_name;
+		}
+
+		// Replace with citation author(s).
+		$display_name = idocs_get_the_citation_author();
+
+		// --<
+		return $display_name;
 
 	}
 

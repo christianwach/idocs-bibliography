@@ -33,18 +33,8 @@ function idocs_get_the_citation() {
 	// Init return.
 	$citation = '';
 
-	// Get repeating authors fields.
-	$authors = get_field( 'field_idocs_bib_authors' );
-
 	// Build author markup.
-	$author_markup = '';
-	if ( ! empty( $authors ) ) {
-		$build = [];
-		foreach( $authors AS $author ) {
-			$build[] = $author['author'];
-		}
-		$author_markup = implode( '; ', $build ) . ' ';
-	}
+	$author_markup = idocs_get_the_citation_author();
 
 	// Get the date published.
 	$published = get_field( 'field_idocs_bib_year' );
@@ -86,6 +76,46 @@ function idocs_get_the_citation() {
 
 	// --<
 	return $citation;
+
+}
+
+
+
+/**
+ * Show a citation author.
+ *
+ * @since 0.2
+ */
+function idocs_the_citation_author() {
+	echo idocs_get_the_citation_author();
+}
+
+
+
+/**
+ * Build a citation author.
+ *
+ * @since 0.2
+ *
+ * @return $markup The built author markup.
+ */
+function idocs_get_the_citation_author() {
+
+	// Get repeating authors fields.
+	$authors = get_field( 'field_idocs_bib_authors' );
+
+	// Build author markup.
+	$author_markup = '';
+	if ( ! empty( $authors ) ) {
+		$build = [];
+		foreach( $authors AS $author ) {
+			$build[] = $author['author'];
+		}
+		$author_markup = implode( '; ', $build ) . ' ';
+	}
+
+	// --<
+	return $author_markup;
 
 }
 
