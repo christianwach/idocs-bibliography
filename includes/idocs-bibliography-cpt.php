@@ -109,6 +109,9 @@ class iDocs_Bibliography_CPT {
 		// Filter the author and replace with Citation authors.
 		add_filter( 'the_author', [ $this, 'the_author' ] );
 
+		// Filter the author and replace with Citation authors.
+		add_filter( 'get_the_date', [ $this, 'get_the_date' ], 10, 3 );
+
 	}
 
 
@@ -654,6 +657,43 @@ class iDocs_Bibliography_CPT {
 
 		// --<
 		return $display_name;
+
+	}
+
+
+
+	/**
+	 * Replace the post date with Citation date.
+	 *
+	 * @since 0.2
+	 *
+	 * @param str $the_date The existing post date.
+	 * @param str $format The existing format.
+	 * @param WP_Post $post The post object.
+	 * @return str $the_date The modified post date.
+	 */
+	public function get_the_date( $the_date, $format, $post ) {
+
+		// Bail if not our post type.
+		if ( $this->post_type_name !== get_post_type() ) {
+			return $the_date;
+		}
+
+		// Get the date published.
+		$citation_date = get_field( 'field_idocs_bib_year' );
+
+		// Overwrite if populated.
+		if ( ! empty( $citation_date ) ) {
+			$the_date = $citation_date;
+		} else {
+
+			// Truncate date to just the year of the post date.
+			$the_date = date( 'Y', strtotime( $the_date ) );
+
+		}
+
+		// --<
+		return $the_date;
 
 	}
 
