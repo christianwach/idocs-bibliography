@@ -106,6 +106,9 @@ class iDocs_Bibliography_CPT {
 		// Add feature image size.
 		//add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
+		// Filter the title and replace with full Citation.
+		add_filter( 'the_title', [ $this, 'the_title' ], 10, 2 );
+
 		// Filter the author and replace with Citation authors.
 		add_filter( 'the_author', [ $this, 'the_author' ] );
 
@@ -634,6 +637,44 @@ class iDocs_Bibliography_CPT {
 
 
 	// #########################################################################
+
+
+
+	/**
+	 * Replace the post title with the full Citation.
+	 *
+	 * @since 0.2
+	 *
+     * @param str $title The post title.
+     * @param int $id The post ID.
+	 * @return str $title The modified post title.
+	 */
+	public function the_title( $title, $id ) {
+
+		// Bail if not our post type.
+		if ( $this->post_type_name !== get_post_type() ) {
+			return $title;
+		}
+
+		// Bail if not the main loop.
+		if ( ! in_the_loop() ) {
+			return $title;
+		}
+
+		// Bail if single.
+		if ( is_single() ) {
+			return $title;
+		}
+
+		// Replace with full Citation.
+		remove_filter( 'the_title', [ $this, 'the_title' ], 10 );
+		$title = idocs_get_the_citation();
+		add_filter( 'the_title', [ $this, 'the_title' ], 10, 2 );
+
+		// --<
+		return $title;
+
+	}
 
 
 
