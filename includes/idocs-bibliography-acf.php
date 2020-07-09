@@ -226,7 +226,7 @@ class iDocs_Bibliography_ACF {
 			'label' => __( 'Year Published', 'idocs-bibliography' ),
 			'name' => 'year_published',
 			'type' => 'date_picker',
-			'instructions' => '',
+			'instructions' => __( 'Use the Date Picker to select a date of publication. Although the day and month will not be shown, they do still need to be selected.', 'idocs-bibliography' ),
 			'display_format' => 'Y',
 			'return_format' => 'Y',
 			'first_day' => 1,
