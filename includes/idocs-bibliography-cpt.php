@@ -115,6 +115,9 @@ class iDocs_Bibliography_CPT {
 		// Filter the author and replace with Citation authors.
 		add_filter( 'get_the_date', [ $this, 'get_the_date' ], 10, 3 );
 
+		// Alter the order that entries are listed.
+		add_action( 'pre_get_posts', [ $this, 'posts_order' ], 10, 1 );
+
 	}
 
 
@@ -735,6 +738,36 @@ class iDocs_Bibliography_CPT {
 
 		// --<
 		return $the_date;
+
+	}
+
+
+
+	/**
+	 * Replace the post date with Citation date.
+	 *
+	 * @since 0.2
+	 *
+     * @param WP_Query $query The WP_Query instance (passed by reference).
+	 */
+	public function posts_order( $query ) {
+
+		// Target the Citations archive.
+	    if ( ! is_admin() AND $query->is_main_query() AND is_post_type_archive( $this->post_type_name ) ) {
+
+	    	/*
+	    	// To order by Year Published...
+	    	$query->set( 'meta_key', 'year_published' );
+	    	$query->set( 'orderby', 'meta_value_num' );
+	    	$query->set( 'order', 'DESC' );
+	    	*/
+
+			// Order by first author surname.
+	    	$query->set( 'meta_key', 'authors_0_author' );
+	    	$query->set( 'orderby', 'meta_value' );
+	    	$query->set( 'order', 'ASC' );
+
+	    }
 
 	}
 
