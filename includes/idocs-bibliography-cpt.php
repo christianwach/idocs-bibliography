@@ -76,9 +76,6 @@ class iDocs_Bibliography_CPT {
 		// Always create post type.
 		add_action( 'init', [ $this, 'post_type_create' ] );
 
-		// Amend the UI on our post type edit screen.
-		//add_action( 'do_meta_boxes', [ $this, 'post_type_ui_filter' ] );
-
 		// Make sure our feedback is appropriate.
 		add_filter( 'post_updated_messages', [ $this, 'post_type_messages' ] );
 
@@ -123,23 +120,6 @@ class iDocs_Bibliography_CPT {
 
 		// Add Citation aAthors to custom column in List Table.
 		add_action( 'manage_' . $this->post_type_name . '_posts_custom_column', [ $this, 'table_column_populate' ], 10, 2 );
-
-	}
-
-
-
-	/**
-	 * Remove Uncode theme elements.
-	 *
-	 * Not used.
-	 *
-	 * @since 0.1
-	 */
-	public function post_type_ui_filter() {
-
-		// Remove theme metaboxes
-		remove_meta_box( 'uncode_gallery_div', $this->post_type_name, 'normal' );
-		remove_meta_box( '_uncode_page_options', $this->post_type_name, 'normal' );
 
 	}
 
