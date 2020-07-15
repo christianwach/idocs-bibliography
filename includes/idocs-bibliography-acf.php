@@ -147,6 +147,9 @@ class iDocs_Bibliography_ACF {
 		// Define a "ISBN" field.
 		$this->field_isbn_add();
 
+		// Define a "DOI" field.
+		$this->field_doi_add();
+
 		// Define a "Link" field.
 		$this->field_link_add();
 
@@ -420,6 +423,30 @@ class iDocs_Bibliography_ACF {
 			'key' => 'field_idocs_bib_isbn',
 			'label' => __( 'ISBN', 'idocs-bibliography' ),
 			'name' => 'isbn',
+			'type' => 'text',
+			'instructions' => '',
+			'parent' => 'group_idocs_bib_data',
+		];
+
+		// Now add field.
+		acf_add_local_field( $field );
+
+	}
+
+
+
+	/**
+	 * Add "DOI" Field.
+	 *
+	 * @since 0.1
+	 */
+	public function field_doi_add() {
+
+		// Define field.
+		$field = [
+			'key' => 'field_idocs_bib_doi',
+			'label' => __( 'DOI', 'idocs-bibliography' ),
+			'name' => 'doi',
 			'type' => 'text',
 			'instructions' => '',
 			'parent' => 'group_idocs_bib_data',

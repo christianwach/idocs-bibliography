@@ -69,10 +69,18 @@ function idocs_get_the_citation() {
 	$isbn = get_field( 'field_idocs_bib_isbn' );
 	if ( ! empty( $isbn ) ) {
 		$isbn = sprintf( __( 'ISBN %s', 'idocs-bibliography' ), $isbn );
+		$isbn .= ' ';
+	}
+
+	// Build DOI.
+	$doi = get_field( 'field_idocs_bib_doi' );
+	if ( ! empty( $doi ) ) {
+		$doi = sprintf( __( 'DOI %s', 'idocs-bibliography' ), $doi );
+		$doi .= ' ';
 	}
 
 	// Build citation.
-	$citation = $author_markup . $year . $title . $publication . $publisher . $isbn;
+	$citation = trim( $author_markup . $year . $title . $publication . $publisher . $isbn. $doi );
 
 	// --<
 	return $citation;
