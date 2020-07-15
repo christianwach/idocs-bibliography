@@ -20,7 +20,7 @@ The i-Docs Bibliography plugin provides a Custom Post Type with ACF Fields that 
 
 Individual Citations can be inserted into Posts or Pages with the `[idocs_citation]` Shortcode. Lists of Citations can be inserted into Posts or Pages with the `[idocs_citations]` Shortcode. Both Shortcodes work best with the Shortcake plugin. The Lists of Citations Shortcode can be manually configured by using attributes to filter by category ID and/or tag ID, e.g.
 
-* `[idocs_citations category="2,3" tag="8,9,,11" relation="OR" /]`
+* `[idocs_citations category="2,3" tag="8,9,11" relation="OR" /]`
 * `[idocs_citations category="3" tag="4" relation="AND"]`
 
 ### Plugin Development
