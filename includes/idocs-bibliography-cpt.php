@@ -118,6 +118,12 @@ class iDocs_Bibliography_CPT {
 		// Alter the order that entries are listed.
 		add_action( 'pre_get_posts', [ $this, 'posts_order' ], 10, 1 );
 
+		// Add Citation Authors column to List Table.
+		add_filter( 'manage_edit-' . $this->post_type_name . '_columns', [ $this, 'table_column_add' ], 10 );
+
+		// Add Citation aAthors to custom column in List Table.
+		add_action( 'manage_' . $this->post_type_name . '_posts_custom_column', [ $this, 'table_column_populate' ], 10, 2 );
+
 	}
 
 
@@ -768,6 +774,65 @@ class iDocs_Bibliography_CPT {
 	    	*/
 
 	    }
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Add Citation Authors column to List Table.
+	 *
+	 * @since 0.2
+	 *
+	 * @param array $columns The existing columns.
+	 * @return array $columns The modified Columns.
+	 */
+	public function table_column_add( $columns ) {
+
+		// Add Citation Authors.
+		$columns['citation_authors'] = __( 'Citation Author(s)', 'idocs-bibliography' );
+
+		// --<
+		return $columns;
+
+	}
+
+
+
+	/**
+	 * Add Citation Authors to custom column in List Table.
+	 *
+	 * @since 0.2
+	 *
+	 * @param str $column The column.
+	 * @param int $post_id The numeric ID of the WordPress Post.
+	 */
+	public function table_column_populate( $column, $post_id ) {
+
+		// Add Citation Authors.
+		if ( $column == 'citation_authors' ) {
+
+			// Get repeating authors fields.
+			$authors = get_field( 'field_idocs_bib_authors', $post_id );
+
+			// Build author markup.
+			$author_markup = '';
+			if ( ! empty( $authors ) ) {
+				$build = [];
+				foreach( $authors AS $author ) {
+					$build[] = $author['author'];
+				}
+				$author_markup = implode( '; ', $build ) . ' ';
+			}
+
+			// Output.
+			echo $author_markup;
+
+		}
 
 	}
 
