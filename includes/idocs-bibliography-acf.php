@@ -172,7 +172,7 @@ class iDocs_Bibliography_ACF {
 			'label' => __( 'Author', 'idocs-bibliography' ),
 			'name' => 'author',
 			'type' => 'text',
-			'instructions' => '',
+			'instructions' => __( 'Please enter the author name in the form "Surname, A.B.C." where "A.B.C." are their initials, each followed by a full stop.', 'idocs-bibliography' ),
 		];
 
 		// Define a repeater field.
