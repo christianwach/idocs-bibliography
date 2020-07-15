@@ -755,17 +755,17 @@ class iDocs_Bibliography_CPT {
 		// Target the Citations archive.
 	    if ( ! is_admin() AND $query->is_main_query() AND is_post_type_archive( $this->post_type_name ) ) {
 
-	    	/*
-	    	// To order by Year Published...
+	    	// Order by Year Published.
 	    	$query->set( 'meta_key', 'year_published' );
 	    	$query->set( 'orderby', 'meta_value_num' );
 	    	$query->set( 'order', 'DESC' );
-	    	*/
 
+			/*
 			// Order by first author surname.
 	    	$query->set( 'meta_key', 'authors_0_author' );
 	    	$query->set( 'orderby', 'meta_value' );
 	    	$query->set( 'order', 'ASC' );
+	    	*/
 
 	    }
 
